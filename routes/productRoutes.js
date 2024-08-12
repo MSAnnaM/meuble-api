@@ -27,6 +27,7 @@ productRouter.patch(
   "/:productId",
   checkIsValidId,
   validateBody(productUpdateSchema),
+  upload.single("file"),
   updateProduct
 );
 productRouter.delete("/:productId", checkIsValidId, deleteProduct);

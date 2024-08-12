@@ -37,6 +37,24 @@ export const getAllProducts = async (req, res, next) => {
 export const updateProduct = async (req, res, next) => {
   try {
     const { productId } = req.params;
+    const {name, category, information, params} = req.body
+
+    let product = await Product.findById(productId);
+    if (!product) {
+      throw HttpError(404, "Product not found");
+    }
+    if (name) product.name = name;
+    if (category) {
+      const existingCategory = await Category.findOne({ name: category });
+
+      if (!existingCategory) {
+      throw HttpError(404, "Category not found");
+      }
+      product.category = existingCategory._id
+    }
+
+    if (information) product.information = information;
+
     const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, { new: true, runValidators: true });
 
     if (!updatedProduct) {

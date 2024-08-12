@@ -1,17 +1,15 @@
 import Joi from 'joi';
 
 export const productCreateSchema = Joi.object({
-  name: Joi.string().required().messages({
+  name: Joi.string().messages({
     "string.empty": '"name" cannot be an empty field',
     "any.required": '"name" is required',
   }),
-  category: Joi.string().required().messages({
+  category: Joi.string().messages({
       "string.base": '"category" must be a string',
       "string.empty": '"category" cannot be an empty field',
   }),
-  imgURL: Joi.string().uri().optional().messages({
-    "string.uri": '"imgURL" must be a valid URI',
-  }),
+  imgURL: Joi.any(),
   information: Joi.string().optional().messages({
     "string.base": '"information" must be a string',
   }),

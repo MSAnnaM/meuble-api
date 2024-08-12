@@ -11,13 +11,15 @@ import {
   updateProduct,
   deleteProduct,
 } from "../controllers/productControllers.js";
+import upload from "../midellwares/upload.js";
 
 
 const productRouter = express.Router();
 
 productRouter.post(
   "/create",
-  validateBody(productCreateSchema),
+  // validateBody(productCreateSchema),
+  upload.single("file"),
   createProduct
 );
 productRouter.get("/", getAllProducts);

@@ -1,18 +1,24 @@
 import Product from "../db/models/productModel.js";
 import Category from "../db/models/categoryModel.js";
 import HttpError from "../helpers/HttpError.js";
+import { updateImage } from "../services/userServices.js";
 
 export const createProduct = async (req, res, next) => {
   try {
-      const { name, category, imgURL, information, params } = req.body;
+    const { name, category, information } = req.body;
+    const image = req.file;
+    
       const existingCategory = await Category.findOne({ name: category });
 
       if (!existingCategory) {
-      throw HttpError(404, "Role not found");
+      throw HttpError(404, "Category not found");
       }
     
     const idCategory = existingCategory._id
-    const newProduct = await Product.create({ name, idCategory, imgURL, information, params });
+    const imgURL = await updateImage(image.path);
+    const params = JSON.parse(req.body.params);
+    
+    const newProduct = await Product.create({ name, category: idCategory, imgURL, information, params });
     res.status(201).json(newProduct);
   } catch (error) {
     next(error);

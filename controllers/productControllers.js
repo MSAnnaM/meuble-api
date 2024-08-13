@@ -37,7 +37,8 @@ export const getAllProducts = async (req, res, next) => {
 export const updateProduct = async (req, res, next) => {
   try {
     const { productId } = req.params;
-    const {name, category, information, params} = req.body
+    const { name, category, information, params } = req.body;
+    
 
     let product = await Product.findById(productId);
     if (!product) {
@@ -54,8 +55,12 @@ export const updateProduct = async (req, res, next) => {
     }
 
     if (information) product.information = information;
+    if (params) {
+      const paramsNorm = JSON.parse(req.body.params);
+      product.params = { ...product.params._doc, ...paramsNorm };
+    }
 
-    const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, { new: true, runValidators: true });
+    const updatedProduct = await Product.findByIdAndUpdate(productId, product, { new: true, runValidators: true });
 
     if (!updatedProduct) {
       throw HttpError(404, "Product not found");

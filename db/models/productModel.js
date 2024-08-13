@@ -18,6 +18,9 @@ const productSchema = new Schema({
     information: {
         type: String,
     },
+    // price: {
+    //     type: String,
+    // },
     params: {
         type: Object,
     },

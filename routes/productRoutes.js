@@ -13,13 +13,15 @@ import {
 } from "../controllers/productControllers.js";
 import upload from "../midellwares/upload.js";
 
-
 const productRouter = express.Router();
 
 productRouter.post(
   "/create",
   // validateBody(productCreateSchema),
-  upload.fields([{ name: 'file', maxCount: 1 }, { name: 'images', maxCount: 10 }]),
+  upload.fields([
+    { name: "file", maxCount: 1 },
+    { name: "images", maxCount: 10 },
+  ]),
   createProduct
 );
 productRouter.get("/", getAllProducts);
@@ -27,7 +29,10 @@ productRouter.patch(
   "/:productId",
   checkIsValidId,
   validateBody(productUpdateSchema),
-  upload.fields([{ name: 'file', maxCount: 1 }, { name: 'images', maxCount: 10 }]),
+  upload.fields([
+    { name: "file", maxCount: 1 },
+    { name: "images", maxCount: 10 },
+  ]),
   updateProduct
 );
 productRouter.delete("/:productId", checkIsValidId, deleteProduct);

@@ -25,7 +25,7 @@ export const userSignup = async (req, res, next) => {
     const user = await User.create(data);
     const newUser = await tokenUpdate(user);
 
-newUser.password = undefined;
+    newUser.password = undefined;
     res.status(201).json(newUser);
   } catch (er) {
     next(er);

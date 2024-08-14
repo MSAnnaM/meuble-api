@@ -4,8 +4,8 @@ const { Schema } = mongoose;
 
 const categorySchema = new Schema({
   name: {
-    ua: { type: String, required: true },
-    rus: { type: String, required: true },
+    uk: { type: String, required: true },
+    ru: { type: String, required: true },
   },
 }, 
   { versionKey: false }

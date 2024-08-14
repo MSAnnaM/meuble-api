@@ -3,33 +3,41 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const productSchema = new Schema({
-    name: {
-        type: Object,
-        required: true,
+  title: {
+    uk: { type: String, required: true },
+    ru: { type: String, required: true }
+  },
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: "Category",
+    required: true
+  },
+  imgURL: {
+    type: String
+  },
+  price: {
+    currency: { type: String, required: true },
+    value: { type: Number, required: true }
+  },
+  params: {
+    uk: {
+      type: Map,
+      of: {
+      type: Schema.Types.Mixed,
     },
-    category: {
-       type: Schema.Types.ObjectId,
-      ref: "Category",
-      default: null,
     },
-    imgURL: {
-        type: String,
+    ru: {
+      type: Map,
+      of: {
+      type: Schema.Types.Mixed,
     },
-    information: {
-        type: String,
     },
-    // price: {
-    //     type: String,
-    // },
-    params: {
-        type: Object,
-    },
-},
-    {
-        versionKey: false,
-        timestamps: { createdAt: 'createdAt' },
-     }
-);
+    images: [String],
+  },
+}, {
+  versionKey: false,
+  timestamps: { createdAt: 'createdAt' }
+});
 
 const Product = mongoose.model('Product', productSchema);
 

@@ -5,7 +5,7 @@ export const categoryCreate = async (req, res, next) => {
     try {
         const { name } = req.body;
        
-        const existingCategory = await Category.findOne({ $or: [{ "name.ua": name.ua }, { "name.rus": name.rus }] });
+        const existingCategory = await Category.findOne({ $or: [{ "name.uk": name.uk }, { "name.ru": name.ru }] });
         if (existingCategory) {
             console.log(existingCategory);
             throw HttpError(400, "Category with this name already exists");
@@ -35,12 +35,12 @@ export const updateCategory = async (req, res, next) => {
 
         
         const updateFields = {};
-        if (name?.ua) {
-            updateFields["name.ua"] = name.ua;
+        if (name?.uk) {
+            updateFields["name.uk"] = name.ua;
             
         }
         if (name?.rus) {
-            updateFields["name.rus"] = name.rus;
+            updateFields["name.ru"] = name.ru;
         }
 
         if (Object.keys(updateFields).length === 0) {
